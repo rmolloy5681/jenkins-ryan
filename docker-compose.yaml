@@ -1,0 +1,26 @@
+version: "3"
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - jenkins_config:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+  agent:
+    image: jenkins/ssh-agent:jdk11
+    privileged: true
+    user: root
+    container_name: agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    expose:
+      - 22
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQChuwov8/g6Ue03yRHxY0VOdFXZ7nMtnVlVU81He6SPAyT64FFKo0kCBPiMqWM77+cmG7fkF+5zRMY+Ar25Wl9XuLH7SmCMpkR2L99OwlNq44pQ/5LgaMzkT4dByjA9OWFEQOplt39lxsk7TPRItcABQwqZ5dq82ecf7hrdKG0vCTDZQrIckW7COdNVxyk7pAaGb+tTSvEW/Tg44cJKJZb8ucGVpMaHx2NrbWK6kM1HARCyrr6ad4nxaKMEBD97HF9uhQjYvyS/sWgs6Htd0gTgG66LGEmsJqHgQg/WcJrcfvv55sajt1n2QUP31NAJDf4P5nym8GD7xt5uqsjBj2gJ0Tk1HDZzBqS0OU+zC29eJ27I2EuW2Kx1fPvF9ogOL6bdz7t1hUgEtb3N2U2zcb7/InwlmGvpsY5cvnu2CYAcKRizsD3fLv2RhtDdJeHGN7LptCfy9kMlTYS5RE7iZZ3wFotzeNj56A26zo35/yOMAPGtPwi3p2GJ1RoUu/iq/KM= ryan.molloy@BEL-LT-201008A
+volumes:
+  jenkins_config:
