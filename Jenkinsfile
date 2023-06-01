@@ -9,13 +9,8 @@ pipeline {
             }
         }
         stage('Test') {
-             when {  
-                
-                    changeRequest target: 'main' 
-                   
-                
-            }
             steps {
+                requestApproval(environment: 'DEV', time: 1, unit: 'DAYS')
                 echo 'Testing..'
             }
         }
