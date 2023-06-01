@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
              when {  
                 
-                    branch 'main' 
+                    changeRequest target: 'main' 
                    
                 
             }
