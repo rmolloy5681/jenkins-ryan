@@ -10,10 +10,10 @@ pipeline {
         }
         stage('Test') {
              when {  
-                allOf {
+                
                     branch 'main' 
-                    changeset "api/*"
-                }
+                   
+                
             }
             steps {
                 echo 'Testing..'
